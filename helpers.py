@@ -39,8 +39,8 @@ def show_scatterplot(data, labels, title, xlabel = 'x values', ylabel = 'y value
     plt.figure(figsize = figsize)
     sns.scatterplot(x = data[:,0], y = data[:,1], hue = labels)
     plt.title(title)
-    plt.xlabel("x values")
-    plt.ylabel("y values")
+    plt.xlabel(xlabel)
+    plt.ylabel(ylabel)
     plt.show()
     plt.close()
     
