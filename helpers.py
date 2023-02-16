@@ -45,34 +45,37 @@ def show_scatterplot(data, labels, title, xlabel = 'x values', ylabel = 'y value
     plt.close()
     
     
-def plot_linear_fit(clf, data, labels, title):
+def plot_line_of_best_fit(classifier, data, labels, title, logistic):
     """
-    Produce visualisation of linear fit.
+    Given a classifier (either linear or logistic regression),
+    produce visualisation for the line of best fit.
     
     Arguments:
-        clf: The classifier trained
-            Type: sklearn linear model
+        classifier: The classifier trained
+            Type: sklearn model
         data: The data to plot
             Shape: (x, y)
         labels: Class labels for data
             Shape: (x, )
         title: Plot title
             Type: String
+        logistic: If the model is logistic or not
+            Type: Boolean
     Returns:
         None
         
     
-    Author: Paolo Missier
-    Email: paolo.missier@ncl.ac.uk
+    Author: Cameron Trotter & Paolo Missier
+    Email: c.trotter2@ncl.ac.uk & paolo.missier@ncl.ac.uk
     
     """
     
-    data_min, data_max = data[:, 0].min() - .5, data[:, 0].max() + .5
+    data_min, data_max = data[:, 0].min(), data[:, 0].max()
     
-    w = clf.coef_[0]
+    w = classifier.coef_[0]
     a = -w[0] / w[1]
     xx = np.linspace(data_min, data_max)
-    yy = a * xx - (clf.intercept_[0]) / w[1]
+    yy = a * xx - (classifier.intercept_[0]) / w[1]
 
     fig = plt.figure(figsize=(20,6))
     fig.subplots_adjust(hspace=1, wspace=0.4)
@@ -81,11 +84,10 @@ def plot_linear_fit(clf, data, labels, title):
     sns.scatterplot(x=data[:,0],y=data[:,1], hue=labels)
     ax.set_title(title)
     ax2 = ax.twinx()
-    sns.regplot(x=xx,y=yy, ax=ax2, line_kws={"color": "red"}, scatter = False)
+    sns.regplot(x=xx,y=yy, ax=ax2, line_kws={"color": "red"}, scatter = False, logistic = logistic)
 
     plt.show()
     plt.close()
-    
     
 def plot_confusion_matrix(conf_matrix, labels, title):
     """
